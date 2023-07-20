@@ -1,14 +1,14 @@
 import 'package:chatrat/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const Center(
                 child: Text(
-                  "Sign Up",
+                  "Login",
                   style: TextStyle(
                     fontSize: 30,
                   ),
@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 50,
               ),
               SizedBox(
-                height: 340,
+                height: 300,
                 width: MediaQuery.of(context).size.width,
                 child: Form(
                   key: _signUpKey,
@@ -49,11 +49,31 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       commonTextFormField(hintText: "Email"),
                       commonTextFormField(hintText: "Password"),
-                      commonTextFormField(hintText: "Confirm Password"),
-                      signUpButton(context, 'Sign Up'),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 40, right: 40, bottom: 20),
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: const Text(
+                                "Forgot Password ?",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.lightBlueAccent,
+                                    letterSpacing: 1),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      signUpButton(context, 'Login'),
                     ],
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               const Center(
                 child: Text(
@@ -64,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
               socialMediaIntegrationButtons(),
               const SizedBox(height: 10),
               switchAnotherAuthPage(
-                  context, "Already have an Account?", 'Login')
+                  context, "Don't Have an Account? ", 'Sign-Up')
             ],
           ),
         ),
