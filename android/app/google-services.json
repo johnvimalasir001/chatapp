@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "288643977599",
+    "project_id": "chatrat-f5d26",
+    "storage_bucket": "chatrat-f5d26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288643977599:android:ce626dafb302ad97c78a4a",
+        "android_client_info": {
+          "package_name": "com.johnvimalasir.ChatRat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288643977599-lb37dfbpo2c9gjvf7m1672n3gp66kku5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnd2m0IhRdcZ6D7kbbYOcyYCLRhjg_nx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288643977599-79ln88k0ns143klbnhb4d7sra66qqtg3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
