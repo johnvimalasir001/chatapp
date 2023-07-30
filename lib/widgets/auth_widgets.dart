@@ -115,8 +115,7 @@ Widget switchAnotherAuthPage(
       ],
     ),
     style: ElevatedButton.styleFrom(
-      elevation: 0.0,
-      primary: Color.fromRGBO(34, 48, 60, 1),
+      elevation: 0.0, backgroundColor: Color.fromRGBO(34, 48, 60, 1),
     ),
     onPressed: () {
       if (buttonNameLast == "Login")

@@ -1,280 +1,166 @@
-import 'package:chatrat/pages/pages.dart';
+import 'package:chatrat/widgets/status.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-
-  int _currIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: WillPopScope(
-        onWillPop: () async {
-          if (_currIndex > 0)
-            return false;
-          else {
-            return true;
-          }
-        },
+    return SafeArea(
         child: Scaffold(
-          backgroundColor: const Color.fromRGBO(34, 48, 60, 1),
-          drawer: _drawer(),
-          appBar: AppBar(
-            backgroundColor: const Color.fromRGBO(25, 39, 52, 1),
-            elevation: 10.0,
-            shadowColor: Colors.white70,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40.0),
-                bottomRight: Radius.circular(40.0),
-              ),
-              side: BorderSide(width: 0.7),
-            ),
+      // backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          const SliverAppBar(
+            toolbarHeight: 80,
+            elevation: 10,
+            // backgroundColor: Colors.amber,
             title: Text(
-              "Generation",
+              "ChatRat",
               style: TextStyle(
-                  fontSize: 25.0, fontFamily: 'Lora', letterSpacing: 1.0),
+                color: Colors.orange,
+                fontSize: 40,
+              ),
             ),
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: 10.0),
-                child: Icon(
-                  Icons.search_outlined,
-                  size: 25.0,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  right: 20.0,
-                ),
-                child: IconButton(
-                  tooltip: 'Refresh',
-                  icon: Icon(
-                    Icons.refresh_outlined,
-                    size: 25.0,
-                  ),
-                  onPressed: () async {},
-                ),
-              ),
-            ],
-            bottom: _bottom(), systemOverlayStyle: SystemUiOverlayStyle.light,
-          ),
-          body: TabBarView(
-            children: [
-              Scaffold(backgroundColor: Colors.amber),
-              Scaffold(backgroundColor: Colors.blue),
-              Scaffold(backgroundColor: Colors.green),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  TabBar _bottom() {
-    return TabBar(
-      indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
-      labelColor: Colors.white,
-      unselectedLabelColor: Colors.white60,
-      indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(width: 2.0, color: Colors.lightBlue),
-          insets: EdgeInsets.symmetric(horizontal: 15.0)),
-      automaticIndicatorColorAdjustment: true,
-      labelStyle: TextStyle(
-        fontFamily: 'Lora',
-        fontWeight: FontWeight.w500,
-        letterSpacing: 1.0,
-      ),
-      onTap: (index) {
-        print("\nIndex is: $index");
-        if (mounted) {
-          setState(() {
-            _currIndex = index;
-          });
-        }
-      },
-      tabs: [
-        Tab(
-          child: Text(
-            "Chats",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Lora',
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1.0,
-            ),
-          ),
-        ),
-        Tab(
-          child: Text(
-            "Logs",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: 'Lora',
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1.0,
-            ),
-          ),
-        ),
-        Tab(
-          icon: Icon(
-            Icons.store,
-            size: 25.0,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _drawer(){
-    return Drawer(
-      elevation: 10.0,
-      child: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        color: const Color.fromRGBO(34, 48, 60, 1),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            SizedBox(
-              height: 10.0,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => HomePage()));
-              },
-              child: Center(
+                padding: EdgeInsets.all(8.0),
                 child: CircleAvatar(
-                  backgroundImage: ExactAssetImage('assets/images/google.png'),
-                  backgroundColor: const Color.fromRGBO(34, 48, 60, 1),
-                  radius: MediaQuery.of(context).orientation ==
-                      Orientation.portrait
-                      ? MediaQuery.of(context).size.height *
-                      (1.2 / 8) /
-                      2.5
-                      : MediaQuery.of(context).size.height *
-                      (2.5 / 8) /
-                      2.5,
+                  backgroundColor: Colors.red,
+                  radius: 40,
+                ),
+              ),
+            ],
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: SizedBox(
+                width: 200,
+                // height: 100,
+                child: TextField(
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      size: 30,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    label: const Text(
+                      "Search for user",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.0,
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Status",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[100],
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "See all",
+                      style: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            // _menuOptions(Icons.person_outline_rounded, 'Profile'),
-            // SizedBox(
-            //   height: 10.0,
-            // ),
-            // _menuOptions(Icons.settings, 'Setting'),
-            // SizedBox(
-            //   height: 10.0,
-            // ),
-            // _menuOptions(Icons.support_outlined, 'Support'),
-            // SizedBox(
-            //   height: 10.0,
-            // ),
-            // _menuOptions(Icons.description_outlined, 'About'),
-            // SizedBox(
-            //   height: 30.0,
-            // ),
-            exitButtonCall(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Widget _menuOptions(IconData icon, String menuOptionIs) {
-  //   return OpenContainer(
-  //     transitionType: ContainerTransitionType.fadeThrough,
-  //     transitionDuration: Duration(
-  //       milliseconds: 500,
-  //     ),
-  //     closedElevation: 0.0,
-  //     openElevation: 3.0,
-  //     closedColor: const Color.fromRGBO(34, 48, 60, 1),
-  //     openColor: const Color.fromRGBO(34, 48, 60, 1),
-  //     middleColor: const Color.fromRGBO(34, 48, 60, 1),
-  //     onClosed: (value) {
-  //       // print('Profile Page Closed');
-  //       // if (mounted) {
-  //       //   setState(() {
-  //       //     ImportantThings.findImageUrlAndUserName();
-  //       //   });
-  //       // }
-  //     },
-  //     openBuilder: (context, openWidget) {
-  //       if (menuOptionIs == 'Profile')
-  //          return ProfileScreen();
-  //       else if (menuOptionIs == 'Setting')
-  //          return SettingsWindow();
-  //       else if (menuOptionIs == 'Support')
-  //          return SupportMenuMaker();
-  //       else if (menuOptionIs == 'About') return AboutSection();
-  //       return Center();
-  //     },
-  //     closedBuilder: (context, closeWidget) {
-  //       return SizedBox(
-  //         height: 60.0,
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             Icon(
-  //               icon,
-  //               color: Colors.lightBlue,
-  //             ),
-  //             SizedBox(
-  //               width: 10.0,
-  //             ),
-  //             Text(
-  //               menuOptionIs,
-  //               style: TextStyle(
-  //                 fontSize: 20.0,
-  //                 color: Colors.white,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  Widget exitButtonCall() {
-    return GestureDetector(
-      onTap: () async {
-        await SystemNavigator.pop(animated: true);
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.exit_to_app_rounded,
-            color: Colors.lightBlue,
           ),
-          SizedBox(
-            width: 10.0,
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: CustomStatus(),
+            ),
           ),
-          Text(
-            'Exit',
-            style: TextStyle(
-              fontSize: 20.0,
-              color: Colors.white,
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: 10,
+              (context, index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white30),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // color: Colors.amber,
+                    child: const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.blue,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "John",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Hi How are you",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
       ),
-    );
+    ));
   }
 }

@@ -129,10 +129,9 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            minimumSize: Size(MediaQuery.of(context).size.width - 60, 30.0),
+            minimumSize: Size(MediaQuery.of(context).size.width - 60, 30.0), backgroundColor: Color.fromRGBO(57, 60, 80, 1),
             elevation: 5.0,
-            primary: Color.fromRGBO(57, 60, 80, 1),
-            padding: EdgeInsets.only(
+            padding:const EdgeInsets.only(
               left: 20.0,
               right: 20.0,
               top: 7.0,
