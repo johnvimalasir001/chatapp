@@ -1,6 +1,7 @@
 import 'package:chatrat/Backend/firebase/Auth/email_and_password_auth.dart';
 import 'package:chatrat/Global/globals.dart';
-import 'package:chatrat/pages/Main%20Pages/main_screen.dart';
+import 'package:chatrat/pages/Main_Pages/home_page.dart';
+import 'package:chatrat/pages/pages.dart';
 import 'package:chatrat/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +15,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _logInKey = GlobalKey<FormState>();
 
   late final TextEditingController _email = TextEditingController();
@@ -129,9 +129,10 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            minimumSize: Size(MediaQuery.of(context).size.width - 60, 30.0), backgroundColor: Color.fromRGBO(57, 60, 80, 1),
+            minimumSize: Size(MediaQuery.of(context).size.width - 60, 30.0),
+            backgroundColor: Color.fromRGBO(57, 60, 80, 1),
             elevation: 5.0,
-            padding:const EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: 20.0,
               right: 20.0,
               top: 7.0,
@@ -167,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
             if (emailSignInResults == EmailSignInResults.SignInCompleted)
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (_) => MainScreen()),
+                  MaterialPageRoute(builder: (_) =>const TakePrimaryUserData(),),
                   (route) => false);
             else if (emailSignInResults ==
                 EmailSignInResults.EmailNotVerified) {

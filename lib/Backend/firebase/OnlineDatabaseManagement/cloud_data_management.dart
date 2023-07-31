@@ -8,7 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CloudStoreDataManagement {
-  final _collectionName = 'generation_users';
+  final _collectionName = 'ChatRat_Users';
 
   final SendNotification _sendNotification = SendNotification();
   final LocalDatabase _localDatabase = LocalDatabase();
@@ -27,7 +27,7 @@ class CloudStoreDataManagement {
       return findResults.docs.isEmpty ? true : false;
     } catch (e) {
       print(
-          'Error in Checkj This User Already Present or not: ${e.toString()}');
+          'Error in Check This User Already Present or not: ${e.toString()}');
       return false;
     }
   }
@@ -39,17 +39,17 @@ class CloudStoreDataManagement {
     try {
       final String? _getToken = await FirebaseMessaging.instance.getToken();
 
-      final String currDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+      final String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
-      final String currTime = "${DateFormat('hh:mm a').format(DateTime.now())}";
+      final String currentTime = DateFormat('hh:mm a').format(DateTime.now());
 
       await FirebaseFirestore.instance.doc('$_collectionName/$userEmail').set({
         "about": userAbout,
         "activity": [],
         "connection_request": [],
         "connections": {},
-        "creation_date": currDate,
-        "creation_time": currTime,
+        "creation_date": currentDate,
+        "creation_time": currentTime,
         "phone_number": "",
         "profile_pic": "",
         "token": _getToken.toString(),
