@@ -7,15 +7,16 @@ class PreviousMessageStructure {
   late bool messageHolder;
   late ChatMessageTypes messageType;
 
-  PreviousMessageStructure({required String actualMessage,
-    required String messageType,
-    required String messageDate,
-    required String messageTime,
-    required String messageHolder}) {
-    this.actualMessage = actualMessage;
+  PreviousMessageStructure(
+      {required String actualMessage,
+      required String messageType,
+      required String messageDate,
+      required String messageTime,
+      required String messageHolder}) {
+    actualMessage = actualMessage;
     this.messageType = _getChatMessageTypePerfectly(messageType);
-    this.messageTime = messageTime;
-    this.messageDate = messageDate;
+    messageTime = messageTime;
+    messageDate = messageDate;
     this.messageHolder = _getChatMessageHolderType(messageHolder);
   }
 
@@ -29,13 +30,13 @@ class PreviousMessageStructure {
   }
 
   ChatMessageTypes _getChatMessageTypePerfectly(String messageType) {
-    if (messageType == ChatMessageTypes.Text.toString())
+    if (messageType == ChatMessageTypes.Text.toString()) {
       return ChatMessageTypes.Text;
-    else if (messageType == ChatMessageTypes.Image.toString())
+    } else if (messageType == ChatMessageTypes.Image.toString()) {
       return ChatMessageTypes.Image;
-    else if (messageType == ChatMessageTypes.Video.toString())
+    } else if (messageType == ChatMessageTypes.Video.toString()) {
       return ChatMessageTypes.Video;
-    else if (messageType == ChatMessageTypes.Audio.toString()) {
+    } else if (messageType == ChatMessageTypes.Audio.toString()) {
       return ChatMessageTypes.Audio;
     } else if (messageType == ChatMessageTypes.Document.toString()) {
       return ChatMessageTypes.Document;
@@ -47,6 +48,8 @@ class PreviousMessageStructure {
   }
 
   bool _getChatMessageHolderType(String messageHolderTypeString) {
-    return messageHolderTypeString == MessageHolderType.Me.toString()?false:true;
+    return messageHolderTypeString == MessageHolderType.Me.toString()
+        ? false
+        : true;
   }
 }

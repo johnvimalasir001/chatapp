@@ -11,7 +11,6 @@ class CloudStoreDataManagement {
   final _collectionName = 'ChatRat_Users';
 
   final SendNotification _sendNotification = SendNotification();
-  final LocalDatabase _localDatabase = LocalDatabase();
 
   Future<bool> checkThisUserAlreadyPresentOrNot(
       {required String userName}) async {
@@ -26,8 +25,7 @@ class CloudStoreDataManagement {
 
       return findResults.docs.isEmpty ? true : false;
     } catch (e) {
-      print(
-          'Error in Check This User Already Present or not: ${e.toString()}');
+      print('Error in Check This User Already Present or not: ${e.toString()}');
       return false;
     }
   }
@@ -39,7 +37,8 @@ class CloudStoreDataManagement {
     try {
       final String? _getToken = await FirebaseMessaging.instance.getToken();
 
-      final String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+      final String currentDate =
+          DateFormat('dd-MM-yyyy').format(DateTime.now());
 
       final String currentTime = DateFormat('hh:mm a').format(DateTime.now());
 
@@ -104,9 +103,7 @@ class CloudStoreDataManagement {
       {required String currentUserEmail}) async {
     try {
       final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await FirebaseFirestore.instance
-              .collection(this._collectionName)
-              .get();
+          await FirebaseFirestore.instance.collection(_collectionName).get();
 
       List<Map<String, dynamic>> _usersDataCollection = [];
 
@@ -235,9 +232,7 @@ class CloudStoreDataManagement {
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>?>
       fetchRealTimeDataFromFirestore() async {
     try {
-      return FirebaseFirestore.instance
-          .collection(this._collectionName)
-          .snapshots();
+      return FirebaseFirestore.instance.collection(_collectionName).snapshots();
     } catch (e) {
       print('Error in Fetch Real Time Data : ${e.toString()}');
       return null;
@@ -273,7 +268,7 @@ class CloudStoreDataManagement {
 
       final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
           await FirebaseFirestore.instance
-              .doc("${this._collectionName}/$_getConnectedUserEmail")
+              .doc("${_collectionName}/$_getConnectedUserEmail")
               .get();
 
       final Map<String, dynamic>? connectedUserData = documentSnapshot.data();

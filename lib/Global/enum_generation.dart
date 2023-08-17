@@ -11,19 +11,19 @@ enum EmailSignInResults {
   UnexpectedError,
 }
 
-enum GoogleSignInResults {
-  SignInCompleted,
-  SignInNotCompleted,
-  UnexpectedError,
-  AlreadySignedIn,
-}
+// enum GoogleSignInResults {
+//   SignInCompleted,
+//   SignInNotCompleted,
+//   UnexpectedError,
+//   AlreadySignedIn,
+// }
 
-enum FBSignInResults {
-  SignInCompleted,
-  SignInNotCompleted,
-  AlreadySignedIn,
-  UnExpectedError,
-}
+// enum FBSignInResults {
+//   SignInCompleted,
+//   SignInNotCompleted,
+//   AlreadySignedIn,
+//   UnExpectedError,
+// }
 
 enum StatusMediaTypes {
   TextActivity,

@@ -26,29 +26,29 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             const SizedBox(
               height: 20.0,
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const Scaffold(
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                );
-              },
-              child: Center(
-                child: CircleAvatar(
-                  backgroundImage:
-                      CachedNetworkImageProvider(currentUser.imageUrl),
-                  backgroundColor: Colors.white,
-                  radius: MediaQuery.of(context).orientation ==
-                          Orientation.portrait
-                      ? MediaQuery.of(context).size.height * (1.2 / 8) / 2.5
-                      : MediaQuery.of(context).size.height * (2.5 / 8) / 2.5,
-                ),
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (_) => const Scaffold(
+            //           backgroundColor: Colors.red,
+            //         ),
+            //       ),
+            //     );
+            //   },
+            //   child: Center(
+            //     child: CircleAvatar(
+            //       backgroundImage:
+            //           CachedNetworkImageProvider(currentUser.imageUrl),
+            //       backgroundColor: Colors.white,
+            //       radius: MediaQuery.of(context).orientation ==
+            //               Orientation.portrait
+            //           ? MediaQuery.of(context).size.height * (1.2 / 8) / 2.5
+            //           : MediaQuery.of(context).size.height * (2.5 / 8) / 2.5,
+            //     ),
+            //   ),
+            // ),
             const SizedBox(
               height: 30.0,
             ),

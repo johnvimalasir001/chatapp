@@ -34,11 +34,11 @@ class _TakePrimaryUserDataState extends State<TakePrimaryUserData> {
       backgroundColor: const Color.fromRGBO(34, 48, 60, 1),
       body: LoaderOverlay(
         useDefaultLoading: _isLoading,
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Form(
-            key: this._takeUserPrimaryInformationKey,
+            key: _takeUserPrimaryInformationKey,
             child: ListView(
               shrinkWrap: true,
               children: [
@@ -50,26 +50,28 @@ class _TakePrimaryUserDataState extends State<TakePrimaryUserData> {
                       /// Regular Expression
                       final RegExp _messageRegex = RegExp(r'[a-zA-Z0-9]');
 
-                      if (inputUserName!.length < 6)
+                      if (inputUserName!.length < 6) {
                         return "User Name At Least 6 Characters";
-                      else if (inputUserName.contains(' ') ||
-                          inputUserName.contains('@'))
+                      } else if (inputUserName.contains(' ') ||
+                          inputUserName.contains('@')) {
                         return "Space and '@' Not Allowed...User '_' instead of space";
-                      else if (inputUserName.contains('__'))
+                      } else if (inputUserName.contains('__')) {
                         return "'__' Not Allowed...User '_' instead of '__'";
-                      else if (!_messageRegex.hasMatch(inputUserName))
+                      } else if (!_messageRegex.hasMatch(inputUserName)) {
                         return "Sorry,Only Emoji Not Supported";
+                      }
                       return null;
                     },
-                    textEditingController: this._userName),
+                    textEditingController: _userName),
                 commonTextFormField(
                     hintText: 'User About',
                     validator: (inputVal) {
-                      if (inputVal!.length < 6)
+                      if (inputVal!.length < 6) {
                         return 'User About must have 6 characters';
+                      }
                       return null;
                     },
-                    textEditingController: this._userAbout),
+                    textEditingController: _userAbout),
                 _saveUserPrimaryInformation(),
               ],
             ),
@@ -80,7 +82,7 @@ class _TakePrimaryUserDataState extends State<TakePrimaryUserData> {
   }
 
   Widget _upperHeading() {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.only(top: 30.0, bottom: 50.0),
       child: Center(
         child: Text(
@@ -97,18 +99,18 @@ class _TakePrimaryUserDataState extends State<TakePrimaryUserData> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             minimumSize: Size(MediaQuery.of(context).size.width - 60, 30.0),
+            backgroundColor: Color.fromRGBO(57, 60, 80, 1),
             elevation: 5.0,
-            primary: Color.fromRGBO(57, 60, 80, 1),
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: 20.0,
               right: 20.0,
               top: 7.0,
               bottom: 7.0,
             ),
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
             )),
-        child: Text(
+        child: const Text(
           'Save',
           style: TextStyle(
             fontSize: 25.0,
@@ -117,49 +119,50 @@ class _TakePrimaryUserDataState extends State<TakePrimaryUserData> {
           ),
         ),
         onPressed: () async {
-          if (this._takeUserPrimaryInformationKey.currentState!.validate()) {
+          if (_takeUserPrimaryInformationKey.currentState!.validate()) {
             print('Validated');
 
             SystemChannels.textInput.invokeMethod('TextInput.hide');
 
             if (mounted) {
-              setState(() {
-                this._isLoading = true;
-              });
+              setState(
+                () {
+                  _isLoading = true;
+                },
+              );
             }
 
             final bool canRegisterNewUser = await _cloudStoreDataManagement
-                .checkThisUserAlreadyPresentOrNot(
-                    userName: this._userName.text);
+                .checkThisUserAlreadyPresentOrNot(userName: _userName.text);
 
             String msg = '';
 
-            if (!canRegisterNewUser)
+            if (!canRegisterNewUser) {
               msg = 'User Name Already Present';
-            else {
+            } else {
               final bool _userEntryResponse =
                   await _cloudStoreDataManagement.registerNewUser(
-                      userName: this._userName.text,
-                      userAbout: this._userAbout.text,
+                      userName: _userName.text,
+                      userAbout: _userAbout.text,
                       userEmail:
                           FirebaseAuth.instance.currentUser!.email.toString());
               if (_userEntryResponse) {
                 msg = 'User data Entry Successfully';
 
                 /// Calling Local Databases Methods To Intitialize Local Database with required MEthods
-                await this._localDatabase.createTableToStoreImportantData();
+                await _localDatabase.createTableToStoreImportantData();
 
                 final Map<String, dynamic> _importantFetchedData =
                     await _cloudStoreDataManagement.getTokenFromCloudStore(
                         userMail: FirebaseAuth.instance.currentUser!.email
                             .toString());
 
-                await this._localDatabase.insertOrUpdateDataForThisAccount(
-                    userName: this._userName.text,
+                await _localDatabase.insertOrUpdateDataForThisAccount(
+                    userName: _userName.text,
                     userMail:
                         FirebaseAuth.instance.currentUser!.email.toString(),
                     userToken: _importantFetchedData["token"],
-                    userAbout: this._userAbout.text,
+                    userAbout: _userAbout.text,
                     userAccCreationDate: _importantFetchedData["date"],
                     userAccCreationTime: _importantFetchedData["time"]);
 
@@ -170,8 +173,9 @@ class _TakePrimaryUserDataState extends State<TakePrimaryUserData> {
                     context,
                     MaterialPageRoute(builder: (_) => const HomePage()),
                     (route) => false);
-              } else
+              } else {
                 msg = 'User Data Not Entry Successfully';
+              }
             }
 
             ScaffoldMessenger.of(context)
